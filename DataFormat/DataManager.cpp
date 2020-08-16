@@ -53,63 +53,58 @@ public:
 		this->speed = speed;
 	}
 
-	float* getDataWithFloatArray(int num) {
-		if (num == 1) {
-			float data[] = {
-				gyro[0],
-				gyro[1],
-				gyro[2],
-				accel[0],
-				accel[1],
-				accel[2],
-				pressure[0],
-				pressure[1]
-			};
-			return data;
-		}
-		else if (num == 2) {
-			float data[] = {
-				ypr[0],
-				ypr[1],
-				ypr[2],
-				latitude,
-				longitude,
-				atitude,
-				speed,
-				integrityCode
-			};
-			return data;
-		}
+	float* getDataWithFloatArray() {
+		integrityCode = makeIntegrityCode();
+
+		float data[] = {
+			gyro[0],
+			gyro[1],
+			gyro[2],
+			accel[0],
+			accel[1],
+			accel[2],
+			pressure[0],
+			pressure[1],
+			ypr[0],
+			ypr[1],
+			ypr[2],
+			latitude,
+			longitude,
+			atitude,
+			speed,
+			integrityCode
+		};
+		return data;
 	}
-	void setDataWithFloatArray(int num, float* dataset) {
-		if (num == 1) {
-			int i = 0;
-			for (int a = 0; a < 3; a++) {
-				gyro[a] = dataset[i];
-				i++;
-			}
-			for (int a = 0; a < 3; a++) {
-				accel[a] = dataset[i];
-				i++;
-			}
-			pressure[0] = dataset[6];
-			pressure[1] = dataset[7];
+
+	// 배열로부터 데이터를 받아오고 성공하면 true, 실패하면 false를 반환한다.
+	bool setDataWithFloatArray(float* dataset) {
+		int i = 0;
+		for (int a = 0; a < 3; a++) {
+			gyro[a] = dataset[i];
+			i++;
 		}
-		else if (num == 2) {
-			ypr[0] = dataset[0];
-			ypr[1] = dataset[1];
-			ypr[2] = dataset[2];
-			latitude = dataset[3];
-			longitude = dataset[4];
-			atitude = dataset[5];
-			speed = dataset[6];
-			integrityCode = dataset[7];
+		for (int a = 0; a < 3; a++) {
+			accel[a] = dataset[i];
+			i++;
 		}
+		pressure[0] = dataset[6];
+		pressure[1] = dataset[7];
+		ypr[0] = dataset[8];
+		ypr[1] = dataset[9];
+		ypr[2] = dataset[10];
+		latitude = dataset[11];
+		longitude = dataset[12];
+		atitude = dataset[13];
+		speed = dataset[14];
+		if (integrityCode != makeIntegrityCode()) {
+			return false;
+		}
+		return true;
 	}
 private:
-	void makeIntegrityCode() {
-		integrityCode
-			= (int)gyro[0]
+	float makeIntegrityCode() {
+		return (int)gyro[0]
 			^ (int)gyro[1]
 			^ (int)gyro[2]
 			^ (int)accel[0]
