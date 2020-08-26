@@ -7,6 +7,8 @@ public:
 
 	// Pressure Data
 	float pressure[2];
+	// 0번 : 정압
+	// 1번 : 동압
 
 	// GPS Data
 	float latitude;
@@ -42,7 +44,14 @@ public:
 			this->gyro[i] = gyro[i];
 		}
 	}
+	void setYPR(float* ypr) {
+		for (int i = 0; i < 3; i++) {
+			this->ypr[i] = ypr[i];
+		}
+	}
 	void setPressure(float* pressure) {
+		// 0번 : 정압
+		// 1번 : 동압
 		this->pressure[0] = pressure[0];
 		this->pressure[1] = pressure[1];
 	}
@@ -102,6 +111,7 @@ public:
 		}
 		return true;
 	}
+
 private:
 	float makeIntegrityCode() {
 		return (int)gyro[0]
