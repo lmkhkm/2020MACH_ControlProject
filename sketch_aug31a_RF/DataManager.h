@@ -16,8 +16,6 @@ public:
 	float altitude;
 	float speed;
 
-	// For Integrity
-	float integrityCode;
 
 	DataManager() {
 		for (int i = 0; i < 3; i++) {
@@ -83,7 +81,14 @@ public:
 			speed,
 			integrityCode
 		};
-		return data;
+
+		float* arr = (float*)malloc(sizeof(float) * 16);
+
+		for (int i = 0; i < 16; i++) {
+			arr[i] = data[i];
+		}
+
+		return arr;
 	}
 
 	// 배열로부터 데이터를 받아오고 성공하면 true, 실패하면 false를 반환한다.
@@ -113,6 +118,8 @@ public:
 	}
 
 private:
+	// For Integrity
+	float integrityCode;
 	float makeIntegrityCode() {
 		return (int)gyro[0]
 			^ (int)gyro[1]
@@ -130,4 +137,5 @@ private:
 			^ (int)altitude
 			^ (int)speed;
 	}
+
 };
