@@ -13,7 +13,7 @@ public:
 	// GPS Data
 	float latitude;
 	float longitude;
-	float atitude;
+	float altitude;
 	float speed;
 
 	// For Integrity
@@ -30,7 +30,7 @@ public:
 
 		latitude = 0;
 		longitude = 0;
-		atitude = 0;
+		altitude = 0;
 		speed = 0;
 	};
 
@@ -58,7 +58,7 @@ public:
 	void setGPS(float latitude, float longitude, float atitude, float speed) {
 		this->latitude = latitude;
 		this->longitude = longitude;
-		this->atitude = atitude;
+		this->altitude = atitude;
 		this->speed = speed;
 	}
 
@@ -79,7 +79,7 @@ public:
 			ypr[2],
 			latitude,
 			longitude,
-			atitude,
+			altitude,
 			speed,
 			integrityCode
 		};
@@ -104,7 +104,7 @@ public:
 		ypr[2] = dataset[10];
 		latitude = dataset[11];
 		longitude = dataset[12];
-		atitude = dataset[13];
+		altitude = dataset[13];
 		speed = dataset[14];
 		if (integrityCode != makeIntegrityCode()) {
 			return false;
@@ -127,7 +127,7 @@ private:
 			^ (int)pressure[1]
 			^ (int)latitude
 			^ (int)longitude
-			^ (int)atitude
+			^ (int)altitude
 			^ (int)speed;
 	}
 
